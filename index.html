@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Js2 index1</title>
+
+    <style>
+        ul{
+            list-style: none;
+        }
+        li{
+            display: inline;
+        }
+
+        .active{
+            background: aqua;
+            color: brown;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="root">
+        <h3 style="color: teal;">Vue Data Bainding 1</h3>
+        <h1>Hii  {{name}}, {{message}}</h1>
+        <hr>
+    </div>
+    
+    <div id="root1">
+        <h3 style="color: teal;">Vue Data Bainding 2</h3>
+        <input type="text" v-model="name1">
+        <br>
+        <h1>Hii  {{name1}}, {{message1}}</h1>
+        <hr>
+    </div>
+
+    <div id="root2">
+        <h3 style="color: teal;">Vue Data Bainding 3</h3>
+
+        <ul>
+            <li>
+                <a :href="link1.url" v-bind:title="link1.title" :class="className"> {{ link1.text }} </a>
+            </li>
+            <li>
+                <a v-bind:href="link2.url" :title="link2.title"> {{ link2.text }} </a>
+            </li>
+        </ul>
+        <hr>
+    </div>
+
+    <div id="root3">
+        <h3 style="color: teal;">Vue Conditional Rendaring</h3>
+        <input type="password" v-model="password">
+        <p v-if="password.length == 0">Enter Your Password</p>
+        <p v-else-if="password.length > 0 && password.length <8">Enter Minimum 8 char password.</p>
+        <p v-else>Good Job!!!</p>
+        <button v-show="password.length > 8">Submit</button>
+        <hr>
+    </div>
+
+    <div id="root4">
+        <h3 style="color: teal;">Event Listeners</h3>
+        <h1> {{counter}} </h1>
+        <button v-on:click.ctrl="counter += 1">+</button>
+        <button @click="counter -= 1">-</button>
+        <br>
+        <h1> {{message}} </h1>
+        <input type="text" v-model="newMessage" @keyup="message = newMessage" placeholder="change on keyup">
+        <input type="text" v-model="newMessage" @keyup.enter="message = newMessage" placeholder="change on keyup & enter">
+        <hr>
+    </div>
+
+    <div id="root5">
+        <h3 style="color: teal;">Methods </h3>
+        <h1> {{counter}} </h1>
+        <button @click="increment()">+</button>
+        <button @click="decrement()">-</button>
+        <br>
+        <h4 style="color: tomato;"> {{ fullName() }} </h4>
+        <hr>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- <script src="vue.js"></script> -->
+    <script>
+        var app = new Vue({
+            el: "#root",
+            data: {
+                message: "hello world!",
+                name: "nahid"
+            }
+        });
+
+        var app1 = new Vue({
+            el: "#root1",
+            data: {
+                message1: "Thank You ",
+                name1: "nahid"
+            },
+            mounted: function() {
+                console.log('vue js lode');
+            }
+        });
+
+        var app2 = new Vue({
+            el: "#root2",
+            data: {
+               link1: {
+                   text: "Facebook", title: "Go to Facebook", url: "https://www.facebook.com/"
+               },
+               link2: {
+                   text: "Youtube", title: "Go to Youtube", url: "https://www.youtube.com/"
+               },
+               className: "active"
+            },
+            mounted: function() {
+                console.log('root2 lode');
+            }
+        });
+
+        var app3 = new Vue({
+            el: "#root3",
+            data: {
+               password: ''
+            },
+            mounted: function() {
+                console.log('vue if else');
+            }
+        });
+
+        var app4 = new Vue({
+            el: "#root4",
+            data: {
+               counter: 0,
+               message: "some message",
+               newMessage: ""
+            },
+            mounted: function() {
+                console.log('vue Event Listeners');
+            }
+        });
+
+        var app5 = new Vue({
+            el: "#root5",
+            data: {
+               counter: 0,
+               firstName: "Vue",
+               lastName: "Method"
+            },
+            methods: {
+                increment(){
+                    this.counter += 1;
+                },
+
+                decrement(){
+                    this.counter -= 1;
+                },
+
+                fullName(){
+                    return this.firstName + ' ' + this.lastName;
+                }
+            },
+            mounted: function() {
+                console.log('vue Methods ');
+            }
+        });
+        
+    </script>
+</body>
+</html>

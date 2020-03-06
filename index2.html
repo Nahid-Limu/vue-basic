@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Js2 index2 </title>
+    <style>
+        
+        ul{
+            width: 200px;
+        }
+        ul li{
+            margin: 5px;
+        }
+        ul li button{
+            float: right;
+        }
+        .errorInput{
+            border-color: red;
+            color: red;
+        }
+        .textStyle{
+            text-decoration: line-through;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h3 style="color: #008080; text-decoration: underline;">: Vue Loops , Ternary Operator, Style and Class Buinding :  </h3>
+        <h5>All Task:</h5>
+        <ul>
+            <li v-for="task in todos"> 
+            <span @click="toggleTask(task)" :class="{ textStyle : task.completed }">{{task.title}}</span> 
+                <span v-if="task.completed" :style="[ {textDecoration: task.completed ? 'underline' : '' }, {color: 'green' } ]">(Completed)</span> 
+                <button @click="deleteTask(task)">Delete</button> 
+            </li>
+        </ul>
+
+        <p class="errorInput"> {{errorMsg}} </p>
+        <input type="text" v-model="newTask" :class="{ errorInput: isActive}">
+        <button @click="addNewTask()">Add Task</button>
+        <br>
+        
+        <h5>Input length: {{inputlengthCount}} </h5>
+        <br>
+        
+        <h5>Complete Task:</h5>
+        <ul>
+            <li v-for="task in completeTask">{{task.title}}</li>
+        </ul>
+
+        <h5>InComplete Task:</h5>
+        <ul>
+            <li v-for="task in incompleteTask">{{task.title}}</li>
+        </ul>
+
+        <hr>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- <script src="vue.js"></script> -->
+    <script>
+        
+        var app = new Vue({
+            el: "#app",
+            data: {
+                newTask: '',
+                todos: [
+                    { title: 'task1', completed: true},
+                    { title: 'task2', completed: false},
+                    { title: 'task3', completed: true},
+                    { title: 'task4', completed: false},
+                    { title: 'task5', completed: true}
+                ],
+                errorMsg: '',
+                isActive: false
+            },
+            computed: {
+                // a computed getter
+                inputlengthCount: function () {
+                    return this.newTask.length;
+                },
+                completeTask: function () {
+                    return this.todos.filter(function(t) {
+                        return t.completed;
+                    })
+                },
+                incompleteTask: function () {
+                    return this.todos.filter(function(t) {
+                        return !t.completed;
+                    })
+                }
+            },
+            methods: {
+                addNewTask(){
+                    if ( this.newTask.length>0) {
+                        this.todos.push( { title: this.newTask, completed: false});
+                        this.newTask = '';
+                        this.errorMsg = '';
+                        this.isActive = false;
+                        
+                    } else {
+                        this.errorMsg = 'Input task first !!!!';
+                        this.isActive = true;
+                        
+                    }
+                    
+                },
+
+                deleteTask(task){
+                    var index = this.todos.indexOf(task);
+                    this.todos.splice(index,1);
+                },
+                toggleTask(task){
+                    task.completed = !task.completed;
+                    
+                }
+            },
+            mounted: function() {
+                console.log('Vue Loops , Ternary Operator, Style and Class Buinding.');
+                // var t = [
+                //     { title: 'task1', completed: true},
+                //     { title: 'task2', completed: false},
+                //     { title: 'task3', completed: true},
+                //     { title: 'task4', completed: false},
+                //     { title: 'task4', completed: true}
+                // ];
+                // this.todos = t;
+            }
+        });
+    </script>
+</body>
+</html>
